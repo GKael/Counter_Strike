@@ -8,24 +8,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
-    <!-- Custom Cursor -->
-    <div id="custom-cursor">
-        <div class="cursor-glow"></div>
-        <svg viewBox="0 0 24 24" class="cursor-img" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 1L21 9H15V15H21L12 23L3 15H9V9H3L12 1Z" fill="#ffffff" stroke="#000" stroke-width="0.5"/>
-        </svg>
-    </div>
-    
     <div id="loader">
         <img src="logo2.png" alt="CS2 Logo" id="loader-logo">
     </div>
 
     <!-- Hero Section -->
     <section id="hero">
-        <canvas id="fire-canvas"></canvas>
         <!-- Top Impact Text Area -->
         <div class="impact-text-wrapper">
             <div class="header-nav">
@@ -66,7 +56,26 @@
 
                     <a href="https://www.behance.net/kaelhash" target="_blank" class="nav-item contact-link" data-i18n="download">DOWNLOAD</a>
                 </div>
+                
+                <!-- Hamburger Menu for Mobile -->
+                <button class="hamburger-menu" id="mobile-menu-btn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
+
+            <!-- Mobile Dropdown Menu -->
+            <div class="mobile-menu" id="mobile-menu">
+                <a href="#" class="nav-btn-play mobile-play">
+                    <img src="steam-logo.webp" class="steam-icon-img" alt="Steam">
+                    <span data-i18n="play_free">PLAY FOR FREE</span>
+                </a>
+                <a href="https://store.steampowered.com/news/" target="_blank" class="nav-item" data-i18n="news">NEWS</a>
+                <a href="https://help.steampowered.com/pt-br/wizard/HelpWithGame/?appid=730" target="_blank" class="nav-item" data-i18n="faq">FAQ</a>
+                <a href="https://www.behance.net/kaelhash" target="_blank" class="nav-item contact-link" data-i18n="download">DOWNLOAD</a>
+            </div>
+
             <h1 class="strike-text">
                 <span>S</span><span>T</span><span>R</span><span>I</span><span>K</span><span>E</span>
             </h1>

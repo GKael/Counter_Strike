@@ -2,7 +2,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    cursor: none !important;
 }
 
 /* Custom Scrollbar */
@@ -30,40 +29,6 @@ body, html {
     scroll-snap-type: y mandatory;
     font-family: 'Inter', sans-serif;
     color: #fff;
-    cursor: none; /* Hide default cursor */
-}
-
-/* Custom Cursor */
-#custom-cursor {
-    position: fixed;
-    top: 0; left: 0;
-    width: 32px; height: 32px;
-    pointer-events: none;
-    z-index: 999999;
-    transform: translate(-50%, -50%);
-}
-.cursor-glow {
-    position: absolute;
-    top: 50%; left: 50%;
-    width: 20px; height: 20px;
-    transform: translate(-50%, -50%);
-    background: linear-gradient(135deg, #002FEF, #FBAC18);
-    border-radius: 50%;
-    filter: blur(15px);
-    z-index: -1;
-    transition: transform 0.2s, filter 0.2s;
-}
-.cursor-img {
-    width: 100%; height: 100%;
-    object-fit: contain;
-    transition: transform 0.2s;
-}
-#custom-cursor.hovering .cursor-glow {
-    transform: translate(-50%, -50%) scale(1.5);
-    filter: blur(20px);
-}
-#custom-cursor.hovering .cursor-img {
-    transform: scale(1.2);
 }
 
 section {
@@ -202,7 +167,7 @@ section {
 }
 
 .contact-link {
-    color: #ccff00;
+    color: #fff;
 }
 
 /* Language Selector */
@@ -1583,4 +1548,104 @@ section {
     height: 100%;
     object-fit: contain;
     filter: drop-shadow(0 0 5px rgba(255,255,255,0.5));
+}
+
+/* --- MOBILE RESPONSIVENESS --- */
+.hamburger-menu {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24px;
+    height: 18px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 1100;
+}
+.hamburger-menu span {
+    width: 100%;
+    height: 2px;
+    background: #fff;
+    transition: 0.3s;
+}
+.mobile-menu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 70px;
+    right: 40px;
+    background: #111;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+    gap: 20px;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+}
+.mobile-menu.open {
+    display: flex;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+.mobile-menu .nav-item {
+    font-size: 14px;
+}
+.mobile-play {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #fff;
+    color: #111;
+    padding: 10px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 900;
+}
+.mobile-play img {
+    filter: invert(1);
+    height: 16px;
+}
+
+@media (max-width: 900px) {
+    /* Header */
+    .nav-right > .nav-item { display: none; }
+    .lang-selector-wrapper { display: none; }
+    .hamburger-menu { display: flex; }
+    .nav-left .nav-btn-play, .nav-left > span { display: none; }
+    
+    /* Hero */
+    .strike-text { font-size: 12vw; margin-top: 50px; }
+    .hero-content h2 { font-size: 8vw; line-height: 1.2; }
+    .hero-content .subtitle { font-size: 3vw; }
+    .btn-trailer { padding: 10px 20px; font-size: 14px; }
+    
+    /* Video */
+    .number-two-intro { font-size: 250px; }
+    
+    /* Teams Section */
+    .teams-title { font-size: 40px; margin-top: 40px; }
+    .teams-sub { font-size: 10px; }
+    .wheel-viewport { height: 600px; }
+    .wheel-wrapper { transform: scale(0.5); transform-origin: top center; margin-top: -100px; }
+    
+    /* Workshop Section */
+    .workshop-content { flex-direction: column; gap: 40px; }
+    .wk-left, .wk-right { width: 100%; max-width: none; }
+    
+    /* Skins Section */
+    .skins-title { font-size: 40px; }
+    .skins-grid { grid-template-columns: 1fr; gap: 20px; }
+    
+    /* Esports Section */
+    .esport-title { font-size: 40px; }
+    .esport-grid { grid-template-columns: 1fr; gap: 30px; }
+    
+    /* Footer */
+    .footer-top { flex-direction: column; gap: 20px; align-items: center; text-align: center; }
+    .footer-links { flex-direction: column; gap: 15px; }
+    .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
 }
