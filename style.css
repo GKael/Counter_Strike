@@ -768,9 +768,7 @@ section {
 }
 
 .rank-number {
-    background: linear-gradient(90deg, #002FEF, #FBAC18);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #002FEF;
 }
 
 .atc-name-large {
@@ -1406,17 +1404,13 @@ section {
     z-index: 2;
 }
 
-/* Animations setup */
-.esport-top-left, .esport-top-right, .esport-bottom-shelf {
+/* Animations setup - frame by frame, slower, with impact */
+.esport-top-left, .esport-top-right, .esport-bottom-shelf, .esport-card {
     opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s, transform 0.8s cubic-bezier(0.2, 1, 0.2, 1);
 }
 
 .esport-card {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.8s, transform 0.8s cubic-bezier(0.2, 1, 0.2, 1), box-shadow 0.3s;
+    transition: transform 0.4s cubic-bezier(0.2, 1, 0.2, 1), box-shadow 0.3s;
 }
 
 .esport-section.visible .esport-top-left,
@@ -1424,16 +1418,46 @@ section {
 .esport-section.visible .esport-bottom-shelf {
     opacity: 1;
     transform: translateY(0);
+    animation: esportTextIn 1.1s cubic-bezier(0.16, 1, 0.3, 1) backwards;
 }
 
 .esport-section.visible .esport-card {
     opacity: 1;
     transform: translateY(0);
+    animation: esportCardSlam 1.1s cubic-bezier(0.22, 1, 0.36, 1) backwards;
 }
 
 .esport-section.visible .esport-card.featured {
     opacity: 1;
     transform: translateY(-20px) scale(1.05);
+    animation-name: esportCardSlamFeatured;
+}
+
+/* Sequence: title -> right text -> card 1 -> card 2 -> card 3 -> bottom */
+.esport-section.visible .esport-top-left { animation-delay: 0s; }
+.esport-section.visible .esport-top-right { animation-delay: 0.35s; }
+.esport-section.visible .esport-card:nth-child(1) { animation-delay: 0.8s; }
+.esport-section.visible .esport-card:nth-child(2) { animation-delay: 1.4s; }
+.esport-section.visible .esport-card:nth-child(3) { animation-delay: 2.0s; }
+.esport-section.visible .esport-bottom-shelf { animation-delay: 2.6s; }
+
+@keyframes esportTextIn {
+    0%   { opacity: 0; transform: translateY(60px); filter: blur(8px); }
+    100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+@keyframes esportCardSlam {
+    0%   { opacity: 0; transform: translateY(-80px) scale(1.35); filter: blur(10px) brightness(2.5); }
+    55%  { opacity: 1; transform: translateY(6px) scale(0.94); filter: blur(0) brightness(1.6); }
+    75%  { transform: translateY(-4px) scale(1.02); filter: brightness(1.1); }
+    100% { opacity: 1; transform: translateY(0) scale(1); filter: brightness(1); }
+}
+
+@keyframes esportCardSlamFeatured {
+    0%   { opacity: 0; transform: translateY(-100px) scale(1.45); filter: blur(10px) brightness(2.5); }
+    55%  { opacity: 1; transform: translateY(-14px) scale(0.98); filter: blur(0) brightness(1.6); }
+    75%  { transform: translateY(-24px) scale(1.07); filter: brightness(1.1); }
+    100% { opacity: 1; transform: translateY(-20px) scale(1.05); filter: brightness(1); }
 }
 
 /* Hover effects */
@@ -1446,11 +1470,6 @@ section {
     transform: translateY(-30px) scale(1.05);
     box-shadow: 0 20px 50px rgba(0,0,0,0.8);
 }
-
-.esport-section.visible .esport-card:nth-child(1) { transition-delay: 0.1s; }
-.esport-section.visible .esport-card:nth-child(2) { transition-delay: 0.2s; }
-.esport-section.visible .esport-card:nth-child(3) { transition-delay: 0.3s; }
-.esport-section.visible .esport-bottom-shelf { transition-delay: 0.4s; }
 
 /* Global Footer */
 .site-footer {
