@@ -10,6 +10,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Mobile Drawer Overlay & Menu (Global Top Level) -->
+    <div class="mobile-menu-backdrop" id="mobile-menu-backdrop"></div>
+    <div class="mobile-menu" id="mobile-menu">
+        <div class="mobile-menu-header">
+            <img src="logo2.png" alt="CS Logo" class="mobile-menu-logo">
+            <button class="mobile-menu-close" id="mobile-menu-close-btn" aria-label="Close menu">&times;</button>
+        </div>
+        <div class="mobile-menu-items">
+            <a href="#" class="nav-btn-play mobile-play">
+                <span data-i18n="play_free">PLAY FOR FREE</span>
+            </a>
+            <a href="https://store.steampowered.com/news/" target="_blank" class="nav-item" data-i18n="news">NEWS</a>
+            <a href="https://help.steampowered.com/pt-br/wizard/HelpWithGame/?appid=730" target="_blank" class="nav-item" data-i18n="faq">FAQ</a>
+            <a href="https://www.behance.net/kaelhash" target="_blank" class="nav-item contact-link" data-i18n="download">DOWNLOAD</a>
+        </div>
+    </div>
+
     <div id="loader">
         <img src="logo2.png" alt="CS2 Logo" id="loader-logo">
     </div>
@@ -63,22 +80,6 @@
                     <span></span>
                     <span></span>
                 </button>
-            </div>
-
-            <!-- Mobile Dropdown Menu -->
-            <div class="mobile-menu" id="mobile-menu">
-                <div class="mobile-menu-header">
-                    <img src="logo2.png" alt="CS Logo" class="mobile-menu-logo">
-                    <button class="mobile-menu-close" id="mobile-menu-close-btn" aria-label="Close menu">&times;</button>
-                </div>
-                <div class="mobile-menu-items">
-                    <a href="#" class="nav-btn-play mobile-play">
-                        <span data-i18n="play_free">PLAY FOR FREE</span>
-                    </a>
-                    <a href="https://store.steampowered.com/news/" target="_blank" class="nav-item" data-i18n="news">NEWS</a>
-                    <a href="https://help.steampowered.com/pt-br/wizard/HelpWithGame/?appid=730" target="_blank" class="nav-item" data-i18n="faq">FAQ</a>
-                    <a href="https://www.behance.net/kaelhash" target="_blank" class="nav-item contact-link" data-i18n="download">DOWNLOAD</a>
-                </div>
             </div>
 
             <h1 class="strike-text">
@@ -282,7 +283,7 @@
             COLLECT, TRADE & CUSTOMIZE<br>YOUR LOADOUT ARCHIVE
         </div>
 
-        <a href="#" class="btn-acessar-oficina" data-i18n="btn_workshop">ACCESS WORKSHOP</a>
+        <a href="https://steamcommunity.com/workshop/browse/?appid=730&browsesort=torate&section=mtxitems" target="_blank" class="btn-acessar-oficina" data-i18n="btn_workshop">ACCESS WORKSHOP</a>
 
     </section>
 

@@ -1,4 +1,10 @@
+if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+}
+
 window.addEventListener('load', () => {
+    // Garante que o site sempre abra direto no topo (Hero)
+    window.scrollTo(0, 0);
 
     // Reduzido o tempo de entrada no site (de 2400ms para 400ms)
     setTimeout(() => {
@@ -232,24 +238,39 @@ window.addEventListener('load', () => {
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
     const mobileMenuCloseBtn = document.getElementById('mobile-menu-close-btn');
+    const mobileMenuBackdrop = document.getElementById('mobile-menu-backdrop');
     
-    if (mobileMenuBtn && mobileMenu) {
+    function toggleMobileMenu(open) {
+        if (!mobileMenu) return;
+        const shouldOpen = open !== undefined ? open : !mobileMenu.classList.contains('open');
+        if (shouldOpen) {
+            mobileMenu.classList.add('open');
+            if (mobileMenuBackdrop) mobileMenuBackdrop.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        } else {
+            mobileMenu.classList.remove('open');
+            if (mobileMenuBackdrop) mobileMenuBackdrop.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+    }
+
+    if (mobileMenuBtn) {
         mobileMenuBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            mobileMenu.classList.toggle('open');
+            toggleMobileMenu();
         });
+    }
 
-        if (mobileMenuCloseBtn) {
-            mobileMenuCloseBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                mobileMenu.classList.remove('open');
-            });
-        }
-        
-        document.addEventListener('click', (e) => {
-            if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
-                mobileMenu.classList.remove('open');
-            }
+    if (mobileMenuCloseBtn) {
+        mobileMenuCloseBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleMobileMenu(false);
+        });
+    }
+
+    if (mobileMenuBackdrop) {
+        mobileMenuBackdrop.addEventListener('click', () => {
+            toggleMobileMenu(false);
         });
     }
 
@@ -453,6 +474,19 @@ window.addEventListener('load', () => {
     const fifaTrack = document.getElementById('fifa-carousel-track');
     const fifaDotsContainer = document.getElementById('fifa-carousel-dots');
     if (fifaTrack && fifaDotsContainer) {
+        function scrollFifaCardToCenter(cardIndex, smooth = true) {
+            const card = fifaTrack.children[cardIndex];
+            if (!card) return;
+            const trackRect = fifaTrack.getBoundingClientRect();
+            const cardLeft = card.offsetLeft;
+            const cardWidth = card.offsetWidth;
+            const targetLeft = cardLeft - (trackRect.width / 2) + (cardWidth / 2);
+            fifaTrack.scrollTo({
+                left: targetLeft,
+                behavior: smooth ? 'smooth' : 'auto'
+            });
+        }
+
         teamsData.forEach((t, i) => {
             const card = document.createElement('div');
             card.className = `fifa-card ${i === 0 ? 'active' : ''}`;
@@ -473,10 +507,9 @@ window.addEventListener('load', () => {
             `;
             card.addEventListener('click', () => {
                 updateActiveTeam(i);
-                // Also rotate desktop wheel if resized
                 targetRotation = - (i * 45);
                 isSeeking = true;
-                card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                scrollFifaCardToCenter(i, true);
             });
             fifaTrack.appendChild(card);
 
@@ -485,21 +518,20 @@ window.addEventListener('load', () => {
             dot.setAttribute('aria-label', `Team ${i + 1}`);
             dot.addEventListener('click', () => {
                 updateActiveTeam(i);
-                card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                scrollFifaCardToCenter(i, true);
             });
             fifaDotsContainer.appendChild(dot);
         });
 
-        // Initial align to first card & dot
+        // Initial align to first card & dot without stealing page scroll
         updateActiveTeam(0);
         setTimeout(() => {
-            const firstCard = fifaTrack.querySelector('.fifa-card');
-            if (firstCard) {
-                firstCard.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'center' });
+            if (window.innerWidth <= 900) {
+                scrollFifaCardToCenter(0, false);
             }
-        }, 120);
+        }, 300);
 
-        // Auto-play passando os frames automaticamente a cada 3.2 segundos
+        // Auto-play passando os frames automaticamente mais rápido (2.0s)
         let fifaAutoPlayTimer = null;
         function startFifaAutoPlay() {
             stopFifaAutoPlay();
@@ -507,12 +539,9 @@ window.addEventListener('load', () => {
                 if (window.innerWidth <= 900) {
                     const nextIdx = (currentTeamIndex + 1) % teamsData.length;
                     updateActiveTeam(nextIdx);
-                    const nextCard = fifaTrack.children[nextIdx];
-                    if (nextCard) {
-                        nextCard.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-                    }
+                    scrollFifaCardToCenter(nextIdx, true);
                 }
-            }, 3200);
+            }, 2000); // Mais rápido e dinâmico
         }
         function stopFifaAutoPlay() {
             if (fifaAutoPlayTimer) {
