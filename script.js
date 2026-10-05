@@ -1,4 +1,20 @@
 window.addEventListener('load', () => {
+    // Custom Cursor Logic
+    const customCursor = document.getElementById('custom-cursor');
+    if (customCursor) {
+        document.addEventListener('mousemove', (e) => {
+            customCursor.style.left = e.clientX + 'px';
+            customCursor.style.top = e.clientY + 'px';
+        });
+
+        // Hover states for the custom cursor
+        const interactiveElements = document.querySelectorAll('a, button, .node-card, .brutal-img');
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => customCursor.classList.add('hovering'));
+            el.addEventListener('mouseleave', () => customCursor.classList.remove('hovering'));
+        });
+    }
+
     // Reduzido o tempo de entrada no site (de 2400ms para 400ms)
     setTimeout(() => {
         const loader = document.getElementById('loader');
