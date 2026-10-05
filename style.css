@@ -1630,41 +1630,127 @@ section {
 }
 
 @media (max-width: 900px) {
-    /* Header */
+    /* Global: free scrolling on touch (mandatory snap traps tall sections) */
+    body, html { scroll-snap-type: none; }
+
+    /* ---------- Header ---------- */
+    .header-nav { left: 20px; right: 20px; top: 16px; }
     .nav-right > .nav-item { display: none; }
     .lang-selector-wrapper { display: none; }
     .hamburger-menu { display: flex; }
     .nav-left .nav-btn-play, .nav-left > span { display: none; }
-    
-    /* Hero */
-    .strike-text { font-size: 12vw; margin-top: 50px; }
-    .hero-content h2 { font-size: 8vw; line-height: 1.2; }
-    .hero-content .subtitle { font-size: 3vw; }
-    .btn-trailer { padding: 10px 20px; font-size: 14px; }
-    
-    /* Video */
-    .number-two-intro { font-size: 250px; }
-    
-    /* Teams Section */
-    .teams-title { font-size: 40px; margin-top: 40px; }
-    .teams-sub { font-size: 10px; }
-    .wheel-viewport { height: 600px; }
-    .wheel-wrapper { transform: scale(0.5); transform-origin: top center; margin-top: -100px; }
-    
-    /* Workshop Section */
-    .workshop-content { flex-direction: column; gap: 40px; }
-    .wk-left, .wk-right { width: 100%; max-width: none; }
-    
-    /* Skins Section */
-    .skins-title { font-size: 40px; }
-    .skins-grid { grid-template-columns: 1fr; gap: 20px; }
-    
-    /* Esports Section */
-    .esport-title { font-size: 40px; }
-    .esport-grid { grid-template-columns: 1fr; gap: 30px; }
-    
-    /* Footer */
+    .mobile-menu { right: 20px; top: 56px; }
+
+    /* ---------- Hero ---------- */
+    #hero { height: 100svh; min-height: 560px; }
+    .impact-text-wrapper { height: 50%; }
+    .bottom-area { height: 50%; }
+    .strike-text { font-size: 22vw; margin-top: 4vh; }
+    .character-container {
+        height: 64svh;
+        width: 100vw;
+    }
+    .character {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: bottom center;
+    }
+    .ui-element { font-size: 7px; top: 22%; }
+    .ui-line { width: 24px; }
+    .ui-box { width: 34px; height: 34px; }
+    .left-ui { left: 4%; }
+    .right-ui { right: 4%; top: 40%; }
+    .bottom-left-icon { bottom: 16px; left: 16px; width: 24px; height: 24px; }
+    .bottom-left-icon::after { width: 10px; height: 10px; }
+
+    /* ---------- Video ---------- */
+    .video-section { height: 100svh; min-height: 480px; }
+    .video-container { width: 92vw; height: 51.75vw; }
+    .number-two-intro { font-size: 70vw; }
+    .ambient-glow { width: 90vw; height: 90vw; filter: blur(90px); }
+
+    /* ---------- Teams wheel ---------- */
+    .teams-section {
+        height: 100svh;
+        min-height: 680px;
+        padding-top: 70px;
+    }
+    .teams-subtitle { font-size: 10px; }
+    .teams-title { font-size: 9vw; }
+    .wheel-viewport {
+        top: 150px;
+        height: calc(100% - 150px);
+        padding-top: 30px;
+    }
+    .wheel-wrapper {
+        flex-shrink: 0;
+        transform: scale(0.6);
+        transform-origin: top center;
+    }
+    /* Bigger content inside the scaled wheel so it stays readable */
+    .wheel-node { width: 300px; height: 130px; margin-top: -65px; margin-left: -150px; }
+    .node-card { padding: 18px 22px; }
+    .node-logo-img { height: 48px; }
+    .node-name { font-size: 26px; }
+    .node-points { font-size: 19px; }
+    .active-team-showcase { gap: 28px; }
+    .atc-logo-img { height: 200px; }
+    .atc-rank-large { font-size: 24px; }
+    .atc-name-large { font-size: 64px; }
+    .atc-points-large { font-size: 28px; }
+
+    /* ---------- Workshop / Skins ---------- */
+    .workshop-section.brutalist-layout { height: 100svh; min-height: 600px; }
+    .workshop-corner-text { font-size: 10px; }
+    .workshop-text-top { top: 24px; left: 20px; }
+    .workshop-text-bottom { bottom: 80px; left: 20px; }
+    .brutal-huge-text { font-size: 28vw; }
+    .brutal-img-1 { width: 42vw; height: 26svh; bottom: 18svh; left: 6vw; }
+    .brutal-img-2 { width: 38vw; height: 22svh; top: 12svh; right: 6vw; }
+    .brutal-img-3 { width: 32vw; height: 16svh; top: auto; bottom: 22svh; right: 6vw; }
+    .btn-acessar-oficina { bottom: 20px; right: 20px; padding: 12px 18px; font-size: 10px; }
+
+    /* ---------- Esports ---------- */
+    .esport-section { padding-top: 60px; }
+    .esport-top-layout {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+    .esport-huge-title { font-size: 10vw; }
+    .esport-top-subtext { position: static; text-align: left; margin-top: 12px; }
+    .esport-top-right { max-width: none; font-size: 12px; }
+    .esport-cards-container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 24px;
+    }
+    .esport-card, .esport-card.featured { height: auto; flex: none; }
+    .ec-img-box, .esport-card.featured .ec-img-box { height: 220px; }
+    .ec-subtitle { font-size: 11px; }
+    .ec-desc { font-size: 13px; }
+    .ec-price-huge { font-size: 28px; }
+    /* Featured card: no raised offset when stacked vertically */
+    .esport-section.visible .esport-card.featured {
+        transform: none;
+        animation-name: esportCardSlam;
+    }
+    .esport-section.visible .esport-card:hover,
+    .esport-section.visible .esport-card.featured:hover { transform: none; }
+    .esport-footer-note-box { padding: 20px; font-size: 10px; border-radius: 0 0 16px 16px; }
+    .esport-footer-note-box br { display: none; }
+
+    /* ---------- Footer ---------- */
+    .site-footer { padding: 40px 5vw; }
     .footer-top { flex-direction: column; gap: 20px; align-items: center; text-align: center; }
-    .footer-links { flex-direction: column; gap: 15px; }
-    .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
+    .footer-links { flex-wrap: wrap; justify-content: center; gap: 14px 20px; }
+    .footer-copyright { text-align: center; word-break: break-word; }
+}
+
+@media (max-width: 480px) {
+    .wheel-wrapper { transform: scale(0.48); }
+    .wheel-viewport { top: 140px; height: calc(100% - 140px); }
+    .teams-section { min-height: 620px; }
 }
