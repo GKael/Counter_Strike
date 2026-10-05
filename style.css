@@ -1652,6 +1652,16 @@ section {
     object-fit: contain;
 }
 
+/* FIFA-style Mobile Carousel - Default Hidden on Desktop */
+.fifa-mobile-carousel-wrapper {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+}
+
 @media (max-width: 900px) {
     /* Scroll por sessão com leve travada (scroll-snap com proximidade) */
     body, html {
@@ -1680,7 +1690,7 @@ section {
     .hamburger-menu { display: flex; }
     .nav-left .nav-btn-play, .nav-left > span { display: none; }
 
-    /* ---------- Hero (STRIKE quase tela toda + mais pra baixo) ---------- */
+    /* ---------- Hero (STRIKE 5% mais pra cima) ---------- */
     #hero {
         height: 100svh;
         min-height: 100svh;
@@ -1690,22 +1700,22 @@ section {
         overflow: hidden;
     }
     .impact-text-wrapper {
-        height: 55svh;
+        height: 52svh;
         min-height: auto;
         display: flex;
         align-items: flex-end;
         justify-content: center;
-        padding-bottom: 2vh;
+        padding-bottom: 5vh; /* 5% mais pra cima */
     }
     .bottom-area {
-        height: 45svh;
+        height: 48svh;
         min-height: auto;
     }
     .strike-text {
         font-size: 27vw;
         line-height: 0.85;
         margin-top: 0;
-        margin-bottom: -1vh;
+        margin-bottom: 2vh; /* 5% mais pra cima */
         letter-spacing: -0.05em;
         width: 100%;
         justify-content: center;
@@ -1759,16 +1769,16 @@ section {
     .number-two-intro { font-size: 65vw; }
     .ambient-glow { width: 90vw; height: 90vw; filter: blur(80px); }
 
-    /* ---------- Teams Wheel Section (Centralizado e círculo próximo ao time principal) ---------- */
+    /* ---------- Teams Section: Tira o círculo e ativa Carrossel FIFA Moderno ---------- */
     .teams-section {
         height: 100svh;
         min-height: 100svh;
         padding-top: 45px;
-        padding-bottom: 20px;
+        padding-bottom: 25px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: flex-start;
+        justify-content: space-between;
         overflow: hidden;
         box-sizing: border-box;
     }
@@ -1786,50 +1796,157 @@ section {
         font-size: 8vw;
         line-height: 1.08;
     }
+    
+    /* Esconde a roda clássica no mobile */
     .wheel-viewport {
-        position: relative;
-        top: 0;
-        height: calc(100svh - 130px);
+        display: none !important;
+    }
+
+    /* Ativa Carrossel FIFA Moderno */
+    .fifa-mobile-carousel-wrapper {
+        display: flex;
         width: 100vw;
-        padding-top: 0;
+        flex: 1;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 10px 0 20px 0;
+        box-sizing: border-box;
+    }
+    .fifa-carousel-track {
+        display: flex;
+        gap: 18px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        padding: 25px calc(50vw - 120px);
+        width: 100vw;
+        box-sizing: border-box;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+    .fifa-carousel-track::-webkit-scrollbar {
+        display: none;
+    }
+    .fifa-card {
+        flex: 0 0 240px;
+        height: 350px;
+        scroll-snap-align: center;
+        background: rgba(255, 255, 255, 0.45);
+        backdrop-filter: blur(25px) saturate(180%);
+        -webkit-backdrop-filter: blur(25px) saturate(180%);
+        border: 1.5px solid rgba(255, 255, 255, 0.65);
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 22px 18px;
+        box-sizing: border-box;
+        position: relative;
+        transition: all 0.35s cubic-bezier(0.2, 1, 0.3, 1);
+        transform: scale(0.9);
+        opacity: 0.7;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        user-select: none;
+    }
+    .fifa-card.active {
+        transform: scale(1.04);
+        opacity: 1;
+        background: rgba(255, 255, 255, 0.85);
+        border: 2px solid transparent;
+        border-image: linear-gradient(135deg, #002FEF, #FBAC18) 1;
+        border-radius: 20px;
+        box-shadow: 0 20px 45px rgba(0, 47, 239, 0.22), 0 0 25px rgba(251, 172, 24, 0.18);
+    }
+    .fifa-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+    .fifa-card-rank {
+        font-size: 15px;
+        font-weight: 900;
+        color: #002FEF;
+        letter-spacing: 0.05em;
+    }
+    .fifa-card-flag {
+        font-size: 22px;
+    }
+    .fifa-card-logo-box {
         display: flex;
         justify-content: center;
-        align-items: flex-start;
-        overflow: visible;
+        align-items: center;
+        height: 140px;
+        width: 100%;
     }
-    .wheel-wrapper {
-        flex-shrink: 0;
-        transform: scale(0.55);
-        transform-origin: top center;
-        margin-top: -60px;
+    .fifa-card-logo {
+        max-height: 120px;
+        max-width: 80%;
+        object-fit: contain;
+        filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.15));
+        transition: transform 0.3s ease;
     }
-    .active-team-showcase {
-        top: 38%;
-        left: 50%;
-        gap: 20px;
+    .fifa-card.active .fifa-card-logo {
+        transform: scale(1.08);
     }
-    .wheel-node {
-        width: 270px;
-        height: 115px;
-        margin-top: -57px;
-        margin-left: -135px;
+    .fifa-card-body {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        align-items: center;
     }
-    .node-card {
-        padding: 14px 18px;
+    .fifa-card-name {
+        font-size: 24px;
+        font-weight: 900;
+        color: #111;
+        text-transform: uppercase;
+        letter-spacing: -0.01em;
     }
-    .node-logo-img { height: 40px; }
-    .node-name { font-size: 22px; }
-    .node-points { font-size: 16px; }
-    .atc-logo-img { height: 180px; }
-    .atc-rank-large { font-size: 20px; }
-    .atc-name-large { font-size: 52px; }
-    .atc-points-large { font-size: 24px; }
+    .fifa-card-points {
+        font-size: 12px;
+        font-weight: 700;
+        color: #555;
+    }
+    .fifa-card-badge {
+        margin-top: 8px;
+        font-size: 9px;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        padding: 4px 10px;
+        border-radius: 12px;
+        background: #111;
+        color: #fff;
+    }
+    .fifa-card.active .fifa-card-badge {
+        background: linear-gradient(90deg, #002FEF, #FBAC18);
+    }
+    .fifa-carousel-dots {
+        display: flex;
+        gap: 8px;
+        margin-top: 8px;
+    }
+    .fifa-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, 0.2);
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .fifa-dot.active {
+        width: 22px;
+        border-radius: 4px;
+        background: #002FEF;
+    }
 
-    /* ---------- Workshop / Skins (Alinhamento das skins + botão centralizado) ---------- */
+    /* ---------- Workshop / Skins (Sniper 30% mais pra baixo, M4 5% mais pra cima, textinho mais pra baixo) ---------- */
     .workshop-section.brutalist-layout {
         height: 100svh;
         min-height: 100svh;
-        padding: 30px 16px 40px 16px;
+        padding: 24px 16px 36px 16px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -1846,17 +1963,18 @@ section {
         text-align: center;
         z-index: 5;
     }
+    /* Textinho superior sobre a label SKINS: mais pra baixo */
     .workshop-text-top {
         top: auto;
         left: auto;
         right: auto;
-        margin-top: 10px;
+        margin-top: 48px; /* Mais pra baixo, sem encostar no topo */
     }
     .workshop-text-bottom {
         bottom: auto;
         left: auto;
         right: auto;
-        margin-bottom: 12px;
+        margin-bottom: 14px;
     }
     .brutal-huge-text {
         position: absolute;
@@ -1869,18 +1987,18 @@ section {
         z-index: 1;
         pointer-events: none;
     }
-    /* Grid de skins harmonioso e bem alinhado */
     .brutal-img {
         position: absolute;
         border-radius: 8px;
         overflow: hidden;
         box-shadow: 0 14px 32px rgba(0, 0, 0, 0.28);
     }
+    /* carousel1 (M4/Rifle): 5% mais pra cima -> top 19svh (era 24svh) */
     .brutal-img-1 {
         width: 38vw;
         height: 22svh;
         max-height: 170px;
-        top: 24svh;
+        top: 19svh;
         left: 6vw;
         bottom: auto;
         z-index: 3;
@@ -1889,15 +2007,16 @@ section {
         width: 38vw;
         height: 22svh;
         max-height: 170px;
-        top: 24svh;
+        top: 19svh;
         right: 6vw;
         z-index: 3;
     }
+    /* carousel3 (Sniper/AWP): 30% mais pra baixo -> top 65svh (era 50svh) */
     .brutal-img-3 {
-        width: 44vw;
+        width: 46vw;
         height: 20svh;
         max-height: 150px;
-        top: 50svh;
+        top: 65svh;
         left: 50%;
         right: auto;
         bottom: auto;
@@ -2048,16 +2167,18 @@ section {
 
 @media (max-width: 480px) {
     .header-nav { left: 12px; right: 12px; top: 12px; }
-    .strike-text { font-size: 26vw; }
+    .strike-text { font-size: 26vw; margin-bottom: 3vh; }
     .character-container { height: 58svh; max-height: 440px; }
     .teams-title { font-size: 8.8vw; }
-    .wheel-viewport { height: 490px; }
-    .wheel-wrapper { transform: scale(0.46); margin-top: -80px; }
+    .fifa-card { flex: 0 0 220px; height: 330px; }
+    .fifa-card-name { font-size: 22px; }
+    .fifa-carousel-track { padding: 20px calc(50vw - 110px); }
     .teams-section { min-height: 100svh; padding-top: 35px; }
     .brutal-huge-text { font-size: 34vw; }
-    .brutal-img-1 { width: 40vw; height: 18svh; top: 22svh; left: 5vw; }
-    .brutal-img-2 { width: 40vw; height: 18svh; top: 22svh; right: 5vw; }
-    .brutal-img-3 { width: 48vw; height: 17svh; top: 46svh; }
+    .brutal-img-1 { width: 40vw; height: 18svh; top: 18svh; left: 5vw; }
+    .brutal-img-2 { width: 40vw; height: 18svh; top: 18svh; right: 5vw; }
+    .brutal-img-3 { width: 50vw; height: 18svh; top: 62svh; }
+    .workshop-text-top { margin-top: 38px; }
     .esport-huge-title { font-size: 10vw; }
     .ec-img-box, .esport-card.featured .ec-img-box { height: 170px; }
 }

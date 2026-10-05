@@ -427,6 +427,84 @@ window.addEventListener('load', () => {
                 activeCard.style.transform = 'translate(-50%, -50%) scale(1)';
             }, 150);
         }
+
+        // Sync FIFA mobile carousel active card and dots
+        const fifaCards = document.querySelectorAll('.fifa-card');
+        const fifaDots = document.querySelectorAll('.fifa-dot');
+        fifaCards.forEach((c, i) => {
+            if (i === currentTeamIndex) c.classList.add('active');
+            else c.classList.remove('active');
+        });
+        fifaDots.forEach((d, i) => {
+            if (i === currentTeamIndex) d.classList.add('active');
+            else d.classList.remove('active');
+        });
+    }
+
+    // Initialize FIFA Mobile Carousel
+    const fifaTrack = document.getElementById('fifa-carousel-track');
+    const fifaDotsContainer = document.getElementById('fifa-carousel-dots');
+    if (fifaTrack && fifaDotsContainer) {
+        teamsData.forEach((t, i) => {
+            const card = document.createElement('div');
+            card.className = `fifa-card ${i === 0 ? 'active' : ''}`;
+            card.setAttribute('data-index', i);
+            card.innerHTML = `
+                <div class="fifa-card-header">
+                    <span class="fifa-card-rank">${t.rank.replace(/GLOBAL RANK/, '')}</span>
+                    <span class="fifa-card-flag">${t.flag}</span>
+                </div>
+                <div class="fifa-card-logo-box">
+                    <img src="${t.logo}" alt="${t.name}" class="fifa-card-logo">
+                </div>
+                <div class="fifa-card-body">
+                    <div class="fifa-card-name">${t.name}</div>
+                    <div class="fifa-card-points">${t.points}</div>
+                    <div class="fifa-card-badge">VALVE TOP #${i + 1}</div>
+                </div>
+            `;
+            card.addEventListener('click', () => {
+                updateActiveTeam(i);
+                // Also rotate desktop wheel if resized
+                targetRotation = - (i * 45);
+                isSeeking = true;
+                card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            });
+            fifaTrack.appendChild(card);
+
+            const dot = document.createElement('button');
+            dot.className = `fifa-dot ${i === 0 ? 'active' : ''}`;
+            dot.setAttribute('aria-label', `Team ${i + 1}`);
+            dot.addEventListener('click', () => {
+                updateActiveTeam(i);
+                card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            });
+            fifaDotsContainer.appendChild(dot);
+        });
+
+        // Update active on horizontal swipe/scroll
+        let scrollDebounce;
+        fifaTrack.addEventListener('scroll', () => {
+            clearTimeout(scrollDebounce);
+            scrollDebounce = setTimeout(() => {
+                const cards = document.querySelectorAll('.fifa-card');
+                const trackCenter = fifaTrack.getBoundingClientRect().left + fifaTrack.offsetWidth / 2;
+                let closestIdx = 0;
+                let minDiff = Infinity;
+                cards.forEach((c, idx) => {
+                    const rect = c.getBoundingClientRect();
+                    const cardCenter = rect.left + rect.width / 2;
+                    const diff = Math.abs(trackCenter - cardCenter);
+                    if (diff < minDiff) {
+                        minDiff = diff;
+                        closestIdx = idx;
+                    }
+                });
+                if (closestIdx !== currentTeamIndex) {
+                    updateActiveTeam(closestIdx);
+                }
+            }, 60);
+        });
     }
 
     // Adiciona evento de click nos nodes
