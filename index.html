@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counter-Strike Remake</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="loader">
+        <img src="logo2.png" alt="CS2 Logo" id="loader-logo">
+    </div>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <!-- Top Impact Text Area -->
+        <div class="impact-text-wrapper">
+            <div class="header-nav">
+                <div class="nav-left">
+                    <img src="logo2.png" class="nav-cs-logo" alt="CS Logo">
+                    <a href="#" class="nav-btn-play">
+                        <img src="steam-logo.webp" class="steam-icon-img" alt="Steam">
+                        <span data-i18n="play_free">PLAY FOR FREE</span>
+                    </a>
+                    <span class="nav-item" data-i18n="monthly_players">MONTHLY PLAYERS 29,399,919</span>
+                </div>
+                <div class="nav-right">
+                    <a href="https://store.steampowered.com/news/" target="_blank" class="nav-item" data-i18n="news">NEWS</a>
+                    <a href="https://help.steampowered.com/pt-br/wizard/HelpWithGame/?appid=730" target="_blank" class="nav-item" data-i18n="faq">FAQ</a>
+                    
+                    <!-- Custom Language Selector -->
+                    <div class="lang-selector-wrapper">
+                        <button class="lang-btn" id="lang-current-btn" type="button">
+                            <span id="current-lang-flag">🇺🇸</span>
+                            <span id="current-lang-code">EN</span>
+                            <span class="lang-arrow">▼</span>
+                        </button>
+                        <div class="lang-dropdown" id="lang-dropdown">
+                            <div class="lang-option active" data-lang="en">
+                                <span class="lang-flag">🇺🇸</span>
+                                <span class="lang-name">English</span>
+                            </div>
+                            <div class="lang-option" data-lang="pt">
+                                <span class="lang-flag">🇧🇷</span>
+                                <span class="lang-name">Português</span>
+                            </div>
+                            <div class="lang-option" data-lang="ru">
+                                <span class="lang-flag">🇷🇺</span>
+                                <span class="lang-name">Русский</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="https://www.behance.net/kaelhash" target="_blank" class="nav-item contact-link" data-i18n="download">DOWNLOAD</a>
+                </div>
+            </div>
+            <h1 class="strike-text">
+                <span>S</span><span>T</span><span>R</span><span>I</span><span>K</span><span>E</span>
+            </h1>
+        </div>
+
+        <!-- Bottom area with blurred dark background -->
+        <div class="bottom-area">
+            <div class="bottom-bg"></div>
+            <!-- Decorative UI elements similar to the second image -->
+            <div class="ui-element left-ui">
+                <span class="ui-line"></span>
+                <span class="ui-text">IN PURSUIT OF<br>PERFECTION</span>
+                <div class="ui-box">
+                    <div class="ui-dot dot-tl"></div>
+                    <div class="ui-dot dot-tr"></div>
+                    <div class="ui-dot dot-br"></div>
+                    <div class="ui-dot dot-bl"></div>
+                    <div class="ui-box-border-t"></div>
+                    <div class="ui-box-border-r"></div>
+                    <div class="ui-box-border-b"></div>
+                    <div class="ui-box-border-l"></div>
+                </div>
+            </div>
+            <div class="ui-element right-ui">
+                <div class="ui-box">
+                    <div class="ui-dot dot-tl"></div>
+                    <div class="ui-dot dot-tr"></div>
+                    <div class="ui-dot dot-br"></div>
+                    <div class="ui-dot dot-bl"></div>
+                    <div class="ui-box-border-t"></div>
+                    <div class="ui-box-border-r"></div>
+                    <div class="ui-box-border-b"></div>
+                    <div class="ui-box-border-l"></div>
+                </div>
+                <span class="ui-line"></span>
+                <span class="ui-text" data-i18n="right_ui_text">ATTENTION TO DETAIL</span>
+            </div>
+            <div class="bottom-left-icon"></div>
+        </div>
+        
+        <!-- Personagem -->
+        <div class="character-container">
+            <img src="character.webp" alt="CS Character" class="character">
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section class="video-section">
+        <div class="ambient-glow glow-1"></div>
+        <div class="ambient-glow glow-2"></div>
+        
+        <div class="number-two-intro">2</div>
+        <div class="video-container">
+            <iframe id="cs-trailer-video" src="https://www.youtube.com/embed/c80dVYcL69E?enablejsapi=1&autoplay=1&mute=1&controls=0&showinfo=0&rel=0&loop=1&playlist=c80dVYcL69E&modestbranding=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </section>
+
+    <!-- Top Teams Circular Wheel Section -->
+    <section class="teams-section">
+        <div class="teams-header">
+            <div class="teams-subtitle" data-i18n="teams_section_tag">VALVE REGIONAL STANDINGS</div>
+            <h2 class="teams-title" data-i18n="teams_section_title"><span class="solid-text">TOP GLOBAL</span> <span class="outline-text">TEAMS</span></h2>
+        </div>
+
+        <!-- Featured Active Team Showcase was moved inside the wheel -->
+
+        <!-- Rotating Circular Wheel -->
+        <div class="wheel-viewport">
+            <div class="wheel-wrapper">
+                <!-- Info inside the globe (but outside the rotating part) -->
+                <div class="active-team-showcase" id="active-team-card">
+                    <div class="atc-flag-large" id="atc-flag">🇫🇷</div>
+                    <div class="atc-info-large">
+                        <div class="atc-rank-large" id="atc-rank">#1 GLOBAL RANK</div>
+                        <h3 class="atc-name-large" id="atc-name">Vitality</h3>
+                        <div class="atc-points-large" id="atc-points">3781.3 EGW Points</div>
+                    </div>
+                </div>
+
+                <div class="teams-wheel" id="teams-wheel">
+                    <div class="wheel-outer-ring"></div>
+                    <div class="wheel-inner-ring"></div>
+                    <div class="wheel-center-glow"></div>
+                    
+                    <!-- 8 Teams mounted around the 360deg circle (every 45deg) -->
+                <div class="wheel-node active" data-index="0" style="--angle: 0deg;">
+                    <div class="node-card">
+                        <div class="node-top">
+                            <span class="node-flag">🇫🇷</span>
+                        </div>
+                        <div class="node-name">Vitality</div>
+                        <div class="node-points">3781.3 EGW Points</div>
+                    </div>
+                </div>
+
+                <div class="wheel-node" data-index="1" style="--angle: 45deg;">
+                    <div class="node-card">
+                        <div class="node-top">
+                            <span class="node-flag">🏳️</span>
+                        </div>
+                        <div class="node-name">Team Spirit</div>
+                        <div class="node-points">3455.7 EGW Points</div>
+                    </div>
+                </div>
+
+                <div class="wheel-node" data-index="2" style="--angle: 90deg;">
+                    <div class="node-card">
+                        <div class="node-top">
+                            <span class="node-flag">🇪🇺</span>
+                        </div>
+                        <div class="node-name">MOUZ</div>
+                        <div class="node-points">3261.9 EGW Points</div>
+                    </div>
+                </div>
+
+                <div class="wheel-node" data-index="3" style="--angle: 135deg;">
+                    <div class="node-card">
+                        <div class="node-top">
+                            <span class="node-flag">🇺🇦</span>
+                        </div>
+                        <div class="node-name">NaVi</div>
+                        <div class="node-points">2760.6 EGW Points</div>
+                    </div>
+                </div>
+
+                <div class="wheel-node" data-index="4" style="--angle: 180deg;">
+                    <div class="node-card">
+                        <div class="node-top">
+                            <span class="node-flag">🇲🇳</span>
+                        </div>
+                        <div class="node-name">The MongolZ</div>
+                        <div class="node-points">2747.0 EGW Points</div>
+                    </div>
+                </div>
+
+                <div class="wheel-node" data-index="5" style="--angle: 225deg;">
+                    <div class="node-card">
+                        <div class="node-top">
+                            <span class="node-flag">🇧🇷</span>
+                        </div>
+                        <div class="node-name">FURIA</div>
+                        <div class="node-points">2734.5 EGW Points</div>
+                    </div>
+                </div>
+
+                <div class="wheel-node" data-index="6" style="--angle: 270deg;">
+                    <div class="node-card">
+                        <div class="node-top">
+                            <span class="node-flag">🇩🇪</span>
+                        </div>
+                        <div class="node-name">G2 Esports</div>
+                        <div class="node-points">2687.9 EGW Points</div>
+                    </div>
+                </div>
+
+                <div class="wheel-node" data-index="7" style="--angle: 315deg;">
+                    <div class="node-card">
+                        <div class="node-top">
+                            <span class="node-flag">🇫🇷</span>
+                        </div>
+                        <div class="node-name">Falcons</div>
+                        <div class="node-points">2666.9 EGW Points</div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Workshop Section (Brutalist Inspo Layout) -->
+    <section class="workshop-section brutalist-layout">
+        
+        <div class="workshop-corner-text workshop-text-top" data-i18n="workshop_text_top">
+            THE COMMUNITY BUILDS<br>A WEAPON'S VISUAL IDENTITY
+        </div>
+
+        <div class="brutal-huge-text">SKINS</div>
+
+        <!-- Floating Images -->
+        <div class="brutal-img brutal-img-1">
+            <img src="carousel1.jpg" alt="Skin 1">
+        </div>
+        <div class="brutal-img brutal-img-2">
+            <img src="carousel2.jpg" alt="Skin 2">
+        </div>
+        <div class="brutal-img brutal-img-3">
+            <img src="carousel3.jpg" alt="Skin 3">
+        </div>
+
+        <div class="workshop-corner-text workshop-text-bottom" data-i18n="workshop_text_bottom">
+            COLLECT, TRADE & CUSTOMIZE<br>YOUR LOADOUT ARCHIVE
+        </div>
+
+        <a href="#" class="btn-acessar-oficina" data-i18n="btn_workshop">ACCESS WORKSHOP</a>
+
+    </section>
+
+    <!-- Esport Section -->
+    <section class="esport-section">
+        <div class="esport-top-layout">
+            <div class="esport-top-left">
+                <div class="esport-top-tag" data-i18n="esport_top_tag">CS2 SCENE</div>
+                <h2 class="esport-huge-title" data-i18n="esport_huge_title">
+                    DISCOVER<br>
+                    <span class="light">THE COMPETITIVE</span><br>
+                    FORMAT
+                </h2>
+                <div class="esport-top-subtext" data-i18n="esport_top_subtext">
+                    SHAPED BY MILLIONS<br>
+                    OF GLOBAL PLAYERS
+                </div>
+            </div>
+            <div class="esport-top-right" data-i18n="esport_top_right">
+                3 competitive tiers — matched to your skill level<br>
+                and the level of challenge you need to conquer.
+            </div>
+        </div>
+
+        <div class="esport-cards-container">
+            <!-- Card 1 -->
+            <div class="esport-card">
+                <div class="ec-tag" data-i18n="card1_tag">GRASSROOTS</div>
+                <div class="ec-img-box">
+                    <img src="esport1.jpg" alt="Local">
+                </div>
+                <div class="ec-content">
+                    <div class="ec-subtitle" data-i18n="card1_subtitle">FOR CASUAL & LOCAL</div>
+                    <p class="ec-desc" data-i18n="card1_desc">1-2 servers (e.g. community maps), basic match scenarios, local support.</p>
+                    <div class="ec-price-row">
+                        <span class="ec-price-huge" data-i18n="card1_price_huge">FREE</span>
+                        <span class="ec-price-div">|</span>
+                        <span class="ec-price-period">CS2</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 (Featured) -->
+            <div class="esport-card featured">
+                <div class="ec-tag featured-tag" data-i18n="card2_tag">MAJORS <span class="star">★</span></div>
+                <div class="ec-img-box">
+                    <img src="esport2.jpg" alt="Majors">
+                </div>
+                <div class="ec-content">
+                    <div class="ec-subtitle" data-i18n="card2_subtitle">FOR ELITE TEAMS</div>
+                    <p class="ec-desc" data-i18n="card2_desc">Unlimited viewership, massive arenas, dedicated global support.</p>
+                    <div class="ec-price-row">
+                        <span class="ec-price-huge" data-i18n="card2_price_huge">GLOBAL</span>
+                        <span class="ec-price-div">|</span>
+                        <span class="ec-price-period" data-i18n="card2_price_period">ELITE</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="esport-card">
+                <div class="ec-tag" data-i18n="card3_tag">PREMIER</div>
+                <div class="ec-img-box">
+                    <img src="esport3.jpg" alt="Premier">
+                </div>
+                <div class="ec-content">
+                    <div class="ec-subtitle" data-i18n="card3_subtitle">FOR ACTIVE PLAYERS</div>
+                    <p class="ec-desc" data-i18n="card3_desc">Up to 5 stack, global leaderboards, rank qualification, stat management.</p>
+                    <div class="ec-price-row">
+                        <span class="ec-price-huge" data-i18n="card3_price_huge">PRIME</span>
+                        <span class="ec-price-div">|</span>
+                        <span class="ec-price-period" data-i18n="card3_price_period">REQ</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="esport-bottom-shelf">
+            <div class="esport-footer-note-box" data-i18n="esport_footer_note">
+                The competitive scene runs globally regardless of the number of teams — you play for the rank, not for individual stats.<br>
+                Train upfront for 6 or 12 months and get a 10-15% skill increase.<br>
+                A one-time setup and hardware fee applies separately,<br>
+                depending on setup complexity.
+            </div>
+        </div>
+    </section>
+
+    <!-- Global Footer -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-top">
+                <img src="logo2.png" alt="Valve Logo" class="footer-valve-logo">
+                <div class="footer-links">
+                    <a href="#" data-i18n="footer_privacy">PRIVACY POLICY</a>
+                    <a href="#" data-i18n="footer_legal">LEGAL</a>
+                    <a href="#" data-i18n="footer_agreement">STEAM SUBSCRIBER AGREEMENT</a>
+                    <a href="#" data-i18n="footer_support">SUPPORT</a>
+                </div>
+            </div>
+            <div class="footer-divider"></div>
+            <div class="footer-copyright" data-i18n="footer_copyright">
+                This is a fan concept. All rights reserved to Valve Corporation.<br>
+                Designed by Gustavo Kael: <a href="https://www.behance.net/kaelhash" target="_blank" style="color: #888;">https://www.behance.net/kaelhash</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
