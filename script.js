@@ -231,15 +231,23 @@ window.addEventListener('load', () => {
     // Hamburger Menu Logic
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
+    const mobileMenuCloseBtn = document.getElementById('mobile-menu-close-btn');
     
     if (mobileMenuBtn && mobileMenu) {
         mobileMenuBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             mobileMenu.classList.toggle('open');
         });
+
+        if (mobileMenuCloseBtn) {
+            mobileMenuCloseBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                mobileMenu.classList.remove('open');
+            });
+        }
         
         document.addEventListener('click', (e) => {
-            if (!mobileMenu.contains(e.target)) {
+            if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
                 mobileMenu.classList.remove('open');
             }
         });
@@ -481,6 +489,45 @@ window.addEventListener('load', () => {
             });
             fifaDotsContainer.appendChild(dot);
         });
+
+        // Initial align to first card & dot
+        updateActiveTeam(0);
+        setTimeout(() => {
+            const firstCard = fifaTrack.querySelector('.fifa-card');
+            if (firstCard) {
+                firstCard.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'center' });
+            }
+        }, 120);
+
+        // Auto-play passando os frames automaticamente a cada 3.2 segundos
+        let fifaAutoPlayTimer = null;
+        function startFifaAutoPlay() {
+            stopFifaAutoPlay();
+            fifaAutoPlayTimer = setInterval(() => {
+                if (window.innerWidth <= 900) {
+                    const nextIdx = (currentTeamIndex + 1) % teamsData.length;
+                    updateActiveTeam(nextIdx);
+                    const nextCard = fifaTrack.children[nextIdx];
+                    if (nextCard) {
+                        nextCard.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                    }
+                }
+            }, 3200);
+        }
+        function stopFifaAutoPlay() {
+            if (fifaAutoPlayTimer) {
+                clearInterval(fifaAutoPlayTimer);
+                fifaAutoPlayTimer = null;
+            }
+        }
+
+        startFifaAutoPlay();
+
+        // Pause auto-play on touch/swipe and resume after
+        fifaTrack.addEventListener('touchstart', () => stopFifaAutoPlay(), { passive: true });
+        fifaTrack.addEventListener('touchend', () => {
+            setTimeout(startFifaAutoPlay, 2500);
+        }, { passive: true });
 
         // Update active on horizontal swipe/scroll
         let scrollDebounce;
