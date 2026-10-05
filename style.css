@@ -1596,21 +1596,21 @@ section {
     top: 60px;
     right: 16px;
     left: 16px;
-    max-width: 320px;
+    max-width: 330px;
     margin-left: auto;
-    background: rgba(18, 18, 18, 0.96);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 12px;
+    background: rgba(8, 8, 8, 0.78);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 14px;
     padding: 20px;
-    gap: 16px;
+    gap: 14px;
     z-index: 1150;
     opacity: 0;
     visibility: hidden;
     transform: translateY(-10px);
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 .mobile-menu.open {
     display: flex;
@@ -1622,8 +1622,9 @@ section {
     font-size: 13px;
     font-weight: 700;
     letter-spacing: 0.08em;
-    padding: 8px 0;
+    padding: 10px 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    color: #e0e0e0;
 }
 .mobile-menu .nav-item:last-child {
     border-bottom: none;
@@ -1632,32 +1633,37 @@ section {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 12px;
     background: #e6a323;
     color: #000;
-    padding: 12px;
-    border-radius: 6px;
+    padding: 12px 16px;
+    border-radius: 8px;
     text-decoration: none;
     font-weight: 900;
     font-size: 13px;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
+    box-shadow: 0 4px 18px rgba(230, 163, 35, 0.35);
 }
-.mobile-play img {
+.mobile-play img,
+.mobile-play .steam-icon-img {
     filter: brightness(0);
-    height: 16px;
-    width: 16px;
+    height: 18px;
+    width: 18px;
+    object-fit: contain;
 }
 
 @media (max-width: 900px) {
-    /* Global scroll & overflow */
+    /* Scroll por sessão com leve travada (scroll-snap com proximidade) */
     body, html {
-        scroll-snap-type: none;
+        scroll-snap-type: y proximity;
+        scroll-behavior: smooth;
         overflow-x: hidden;
         width: 100%;
     }
     
     section {
-        scroll-snap-align: none;
+        scroll-snap-align: start;
+        scroll-snap-stop: normal;
         width: 100vw;
         max-width: 100%;
         overflow-x: hidden;
@@ -1674,46 +1680,57 @@ section {
     .hamburger-menu { display: flex; }
     .nav-left .nav-btn-play, .nav-left > span { display: none; }
 
-    /* ---------- Hero ---------- */
+    /* ---------- Hero (STRIKE quase tela toda + mais pra baixo) ---------- */
     #hero {
-        height: auto;
+        height: 100svh;
         min-height: 100svh;
+        position: relative;
+        display: flex;
+        flex-direction: column;
         overflow: hidden;
     }
     .impact-text-wrapper {
-        height: 48svh;
-        min-height: 300px;
+        height: 55svh;
+        min-height: auto;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        padding-bottom: 2vh;
     }
     .bottom-area {
-        height: 52svh;
-        min-height: 320px;
+        height: 45svh;
+        min-height: auto;
     }
     .strike-text {
-        font-size: 21vw;
-        margin-top: 2vh;
-        letter-spacing: -0.04em;
+        font-size: 27vw;
+        line-height: 0.85;
+        margin-top: 0;
+        margin-bottom: -1vh;
+        letter-spacing: -0.05em;
+        width: 100%;
+        justify-content: center;
     }
     .character-container {
-        height: 68svh;
-        max-height: 540px;
+        height: 60svh;
+        max-height: 480px;
         width: 100vw;
         bottom: 0;
     }
     .character {
         width: auto;
         height: 100%;
-        max-width: 90vw;
+        max-width: 86vw;
         object-fit: contain;
         object-position: bottom center;
     }
     .ui-element {
         font-size: 7px;
-        top: 20%;
+        top: 18%;
     }
-    .ui-line { width: 20px; }
-    .ui-box { width: 30px; height: 30px; }
+    .ui-line { width: 18px; }
+    .ui-box { width: 28px; height: 28px; }
     .left-ui { left: 3%; }
-    .right-ui { right: 3%; top: 38%; }
+    .right-ui { right: 3%; top: 32%; }
     .bottom-left-icon {
         bottom: 16px;
         left: 16px;
@@ -1722,139 +1739,185 @@ section {
     }
     .bottom-left-icon::after { width: 10px; height: 10px; }
 
-    /* ---------- Video ---------- */
+    /* ---------- Video Section (Ocupando a tela inteira) ---------- */
     .video-section {
-        height: auto;
-        min-height: 70svh;
-        padding: 60px 0;
+        width: 100vw;
+        height: 100svh;
+        min-height: 100svh;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         box-sizing: border-box;
     }
     .video-container {
-        width: 92vw;
-        height: 51.75vw;
-        max-width: 600px;
-        max-height: 337px;
+        width: 94vw;
+        height: 52.875vw;
+        max-width: 720px;
+        max-height: 80vh;
     }
-    .number-two-intro { font-size: 60vw; }
-    .ambient-glow { width: 80vw; height: 80vw; filter: blur(80px); }
+    .number-two-intro { font-size: 65vw; }
+    .ambient-glow { width: 90vw; height: 90vw; filter: blur(80px); }
 
-    /* ---------- Teams Wheel Section ---------- */
+    /* ---------- Teams Wheel Section (Centralizado e círculo próximo ao time principal) ---------- */
     .teams-section {
-        height: auto;
+        height: 100svh;
         min-height: 100svh;
-        padding-top: 50px;
-        padding-bottom: 30px;
+        padding-top: 45px;
+        padding-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
         overflow: hidden;
+        box-sizing: border-box;
     }
     .teams-header {
         padding: 0 16px;
+        text-align: center;
+        z-index: 10;
     }
     .teams-subtitle {
         font-size: 10px;
         letter-spacing: 0.12em;
+        margin-bottom: 4px;
     }
     .teams-title {
-        font-size: 8.5vw;
-        line-height: 1.1;
+        font-size: 8vw;
+        line-height: 1.08;
     }
     .wheel-viewport {
         position: relative;
         top: 0;
-        height: 580px;
+        height: calc(100svh - 130px);
         width: 100vw;
-        padding-top: 10px;
+        padding-top: 0;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
         overflow: visible;
     }
     .wheel-wrapper {
         flex-shrink: 0;
         transform: scale(0.55);
         transform-origin: top center;
-        margin-top: 0;
+        margin-top: -60px;
+    }
+    .active-team-showcase {
+        top: 38%;
+        left: 50%;
+        gap: 20px;
     }
     .wheel-node {
-        width: 280px;
-        height: 120px;
-        margin-top: -60px;
-        margin-left: -140px;
+        width: 270px;
+        height: 115px;
+        margin-top: -57px;
+        margin-left: -135px;
     }
     .node-card {
-        padding: 16px 20px;
+        padding: 14px 18px;
     }
-    .node-logo-img { height: 42px; }
-    .node-name { font-size: 24px; }
-    .node-points { font-size: 17px; }
-    .active-team-showcase {
-        gap: 24px;
-    }
-    .atc-logo-img { height: 190px; }
-    .atc-rank-large { font-size: 22px; }
-    .atc-name-large { font-size: 58px; }
-    .atc-points-large { font-size: 26px; }
+    .node-logo-img { height: 40px; }
+    .node-name { font-size: 22px; }
+    .node-points { font-size: 16px; }
+    .atc-logo-img { height: 180px; }
+    .atc-rank-large { font-size: 20px; }
+    .atc-name-large { font-size: 52px; }
+    .atc-points-large { font-size: 24px; }
 
-    /* ---------- Workshop / Skins ---------- */
+    /* ---------- Workshop / Skins (Alinhamento das skins + botão centralizado) ---------- */
     .workshop-section.brutalist-layout {
-        height: auto;
-        min-height: 90svh;
-        padding: 50px 0 80px 0;
+        height: 100svh;
+        min-height: 100svh;
+        padding: 30px 16px 40px 16px;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
         position: relative;
+        box-sizing: border-box;
+        overflow: hidden;
     }
     .workshop-corner-text {
-        position: absolute;
+        position: relative;
         font-size: 10px;
         line-height: 1.35;
         letter-spacing: 0.06em;
+        text-align: center;
+        z-index: 5;
     }
     .workshop-text-top {
-        top: 20px;
-        left: 16px;
-        right: 16px;
-    }
-    .workshop-text-bottom {
-        bottom: 80px;
-        left: 16px;
-        right: 16px;
-    }
-    .brutal-huge-text {
-        position: relative;
-        transform: scaleX(1.1);
-        font-size: 32vw;
-        line-height: 0.9;
-        margin: 40px 0;
         top: auto;
         left: auto;
+        right: auto;
+        margin-top: 10px;
+    }
+    .workshop-text-bottom {
+        bottom: auto;
+        left: auto;
+        right: auto;
+        margin-bottom: 12px;
+    }
+    .brutal-huge-text {
+        position: absolute;
+        top: 48%;
+        left: 50%;
+        transform: translate(-50%, -50%) scaleX(1.1);
+        font-size: 32vw;
+        line-height: 0.9;
+        margin: 0;
+        z-index: 1;
+        pointer-events: none;
+    }
+    /* Grid de skins harmonioso e bem alinhado */
+    .brutal-img {
+        position: absolute;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 14px 32px rgba(0, 0, 0, 0.28);
     }
     .brutal-img-1 {
-        width: 44vw;
-        height: 24svh;
-        max-height: 190px;
-        bottom: 16svh;
-        left: 4vw;
+        width: 38vw;
+        height: 22svh;
+        max-height: 170px;
+        top: 24svh;
+        left: 6vw;
+        bottom: auto;
+        z-index: 3;
     }
     .brutal-img-2 {
-        width: 40vw;
-        height: 20svh;
-        max-height: 160px;
-        top: 8svh;
-        right: 4vw;
+        width: 38vw;
+        height: 22svh;
+        max-height: 170px;
+        top: 24svh;
+        right: 6vw;
+        z-index: 3;
     }
     .brutal-img-3 {
-        width: 34vw;
-        height: 16svh;
-        max-height: 130px;
-        top: auto;
-        bottom: 22svh;
-        right: 4vw;
+        width: 44vw;
+        height: 20svh;
+        max-height: 150px;
+        top: 50svh;
+        left: 50%;
+        right: auto;
+        bottom: auto;
+        transform: translateX(-50%);
+        z-index: 4;
+    }
+    .workshop-section.visible .brutal-img-3 {
+        transform: translateX(-50%);
     }
     .btn-acessar-oficina {
-        position: absolute;
-        bottom: 24px;
-        right: 16px;
-        padding: 12px 20px;
+        position: relative;
+        bottom: auto;
+        right: auto;
+        margin: 0 auto;
+        padding: 14px 32px;
         font-size: 11px;
+        letter-spacing: 0.12em;
+        align-self: center;
+        z-index: 10;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
     }
 
     /* ---------- Esports ---------- */
@@ -1985,16 +2048,16 @@ section {
 
 @media (max-width: 480px) {
     .header-nav { left: 12px; right: 12px; top: 12px; }
-    .strike-text { font-size: 20vw; }
-    .character-container { height: 60svh; max-height: 460px; }
-    .teams-title { font-size: 9.5vw; }
-    .wheel-viewport { height: 500px; }
-    .wheel-wrapper { transform: scale(0.44); }
-    .teams-section { min-height: auto; padding-top: 40px; }
+    .strike-text { font-size: 26vw; }
+    .character-container { height: 58svh; max-height: 440px; }
+    .teams-title { font-size: 8.8vw; }
+    .wheel-viewport { height: 490px; }
+    .wheel-wrapper { transform: scale(0.46); margin-top: -80px; }
+    .teams-section { min-height: 100svh; padding-top: 35px; }
     .brutal-huge-text { font-size: 34vw; }
-    .brutal-img-1 { width: 48vw; height: 20svh; }
-    .brutal-img-2 { width: 44vw; height: 18svh; }
-    .brutal-img-3 { width: 38vw; height: 15svh; }
+    .brutal-img-1 { width: 40vw; height: 18svh; top: 22svh; left: 5vw; }
+    .brutal-img-2 { width: 40vw; height: 18svh; top: 22svh; right: 5vw; }
+    .brutal-img-3 { width: 48vw; height: 17svh; top: 46svh; }
     .esport-huge-title { font-size: 10vw; }
     .ec-img-box, .esport-card.featured .ec-img-box { height: 170px; }
 }
