@@ -477,12 +477,9 @@ window.addEventListener('load', () => {
         function scrollFifaCardToCenter(cardIndex, smooth = true) {
             const card = fifaTrack.children[cardIndex];
             if (!card) return;
-            const trackRect = fifaTrack.getBoundingClientRect();
-            const cardLeft = card.offsetLeft;
-            const cardWidth = card.offsetWidth;
-            const targetLeft = cardLeft - (trackRect.width / 2) + (cardWidth / 2);
+            const targetLeft = card.offsetLeft - ((fifaTrack.clientWidth - card.offsetWidth) / 2);
             fifaTrack.scrollTo({
-                left: targetLeft,
+                left: Math.max(0, targetLeft),
                 behavior: smooth ? 'smooth' : 'auto'
             });
         }
@@ -529,7 +526,7 @@ window.addEventListener('load', () => {
             if (window.innerWidth <= 900) {
                 scrollFifaCardToCenter(0, false);
             }
-        }, 300);
+        }, 200);
 
         // Auto-play passando os frames automaticamente mais rápido (2.0s)
         let fifaAutoPlayTimer = null;
@@ -541,7 +538,7 @@ window.addEventListener('load', () => {
                     updateActiveTeam(nextIdx);
                     scrollFifaCardToCenter(nextIdx, true);
                 }
-            }, 2000); // Mais rápido e dinâmico
+            }, 2000); // 2.0s ágil
         }
         function stopFifaAutoPlay() {
             if (fifaAutoPlayTimer) {
@@ -558,19 +555,19 @@ window.addEventListener('load', () => {
             setTimeout(startFifaAutoPlay, 2500);
         }, { passive: true });
 
-        // Update active on horizontal swipe/scroll
+        // Update active on horizontal swipe/scroll - detects center card accurately
         let scrollDebounce;
         fifaTrack.addEventListener('scroll', () => {
             clearTimeout(scrollDebounce);
             scrollDebounce = setTimeout(() => {
-                const cards = document.querySelectorAll('.fifa-card');
-                const trackCenter = fifaTrack.getBoundingClientRect().left + fifaTrack.offsetWidth / 2;
+                const cards = fifaTrack.querySelectorAll('.fifa-card');
+                const viewportCenter = window.innerWidth / 2;
                 let closestIdx = 0;
                 let minDiff = Infinity;
                 cards.forEach((c, idx) => {
                     const rect = c.getBoundingClientRect();
-                    const cardCenter = rect.left + rect.width / 2;
-                    const diff = Math.abs(trackCenter - cardCenter);
+                    const cardCenter = rect.left + (rect.width / 2);
+                    const diff = Math.abs(viewportCenter - cardCenter);
                     if (diff < minDiff) {
                         minDiff = diff;
                         closestIdx = idx;
@@ -579,7 +576,7 @@ window.addEventListener('load', () => {
                 if (closestIdx !== currentTeamIndex) {
                     updateActiveTeam(closestIdx);
                 }
-            }, 60);
+            }, 50);
         });
     }
 
