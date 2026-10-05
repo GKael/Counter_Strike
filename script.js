@@ -419,7 +419,7 @@ window.addEventListener('load', () => {
                         atcFlag.textContent = team.flag;
                     }
                 }
-                if (atcRank) atcRank.innerHTML = team.rank.replace(/^(#\d+)/, '<span style="color: #002FEF;">$1</span>');
+                if (atcRank) atcRank.innerHTML = team.rank.replace(/^(#\d+)/, '<span class="rank-number">$1</span>');
                 if (atcName) atcName.textContent = team.name;
                 if (atcPoints) atcPoints.textContent = team.points;
                 
@@ -546,4 +546,127 @@ window.addEventListener('load', () => {
             document.documentElement.style.setProperty('--py', `0px`);
         });
     }
+
+    // Three.js Fire Trail (Hero Section)
+    function initFireTrail() {
+        const canvas = document.getElementById('fire-canvas');
+        if (!canvas || typeof THREE === 'undefined') return;
+
+        const hero = document.getElementById('hero');
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: false });
+        renderer.setSize(window.innerWidth, hero.clientHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.OrthographicCamera(
+            0, window.innerWidth, 0, hero.clientHeight, 1, 1000
+        );
+        camera.position.z = 10;
+
+        const particles = [];
+        const textureLoader = new THREE.TextureLoader();
+        
+        // Generate a radial gradient texture for the fire particles programmatically
+        const particleCanvas = document.createElement('canvas');
+        particleCanvas.width = 32;
+        particleCanvas.height = 32;
+        const ctx = particleCanvas.getContext('2d');
+        const grad = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
+        grad.addColorStop(0, 'rgba(255, 255, 255, 1)');
+        grad.addColorStop(0.2, 'rgba(0, 221, 255, 0.8)'); // cyan/blue inner
+        grad.addColorStop(0.6, 'rgba(0, 47, 239, 0.4)'); // deep blue outer
+        grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, 32, 32);
+        
+        const particleTexture = new THREE.CanvasTexture(particleCanvas);
+        
+        const material = new THREE.SpriteMaterial({
+            map: particleTexture,
+            transparent: true,
+            blending: THREE.AdditiveBlending,
+            depthWrite: false
+        });
+
+        let mouse = { x: -1000, y: -1000 };
+        let isHeroHovered = false;
+
+        hero.addEventListener('mousemove', (e) => {
+            const rect = hero.getBoundingClientRect();
+            mouse.x = e.clientX - rect.left;
+            mouse.y = e.clientY - rect.top;
+            isHeroHovered = true;
+            spawnParticle(mouse.x, mouse.y);
+        });
+
+        hero.addEventListener('mouseleave', () => {
+            isHeroHovered = false;
+        });
+
+        function spawnParticle(x, y) {
+            // Spawn multiple particles per mouse move for a denser fire effect
+            for(let i=0; i<3; i++) {
+                const sprite = new THREE.Sprite(material.clone());
+                
+                sprite.position.set(
+                    x + (Math.random() - 0.5) * 20, 
+                    y + (Math.random() - 0.5) * 20, 
+                    0
+                );
+                
+                // Random scale
+                const scale = 20 + Math.random() * 40;
+                sprite.scale.set(scale, scale, 1);
+                
+                sprite.userData = {
+                    velocity: new THREE.Vector2((Math.random() - 0.5) * 1.5, -(Math.random() * 2 + 1)), // Fire goes UP (negative Y in orthographic)
+                    life: 1.0,
+                    decay: 0.02 + Math.random() * 0.02,
+                    rotSpeed: (Math.random() - 0.5) * 0.2
+                };
+                
+                scene.add(sprite);
+                particles.push(sprite);
+            }
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                p.userData.life -= p.userData.decay;
+                
+                if (p.userData.life <= 0) {
+                    scene.remove(p);
+                    particles.splice(i, 1);
+                    continue;
+                }
+                
+                p.position.x += p.userData.velocity.x;
+                p.position.y += p.userData.velocity.y;
+                p.material.rotation += p.userData.rotSpeed;
+                p.material.opacity = p.userData.life;
+                
+                // Scale down as it dies
+                const newScale = p.scale.x * 0.95;
+                p.scale.set(newScale, newScale, 1);
+            }
+            
+            renderer.render(scene, camera);
+        }
+        
+        animate();
+
+        window.addEventListener('resize', () => {
+            if (hero && canvas) {
+                camera.right = window.innerWidth;
+                camera.bottom = hero.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, hero.clientHeight);
+            }
+        });
+    }
+
+    initFireTrail();
 });

@@ -8,12 +8,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
     <!-- Custom Cursor -->
     <div id="custom-cursor">
         <div class="cursor-glow"></div>
-        <img src="cursor.png" class="cursor-img" alt="">
+        <svg viewBox="0 0 24 24" class="cursor-img" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 1L21 9H15V15H21L12 23L3 15H9V9H3L12 1Z" fill="#ffffff" stroke="#000" stroke-width="0.5"/>
+        </svg>
     </div>
     
     <div id="loader">
@@ -22,6 +25,7 @@
 
     <!-- Hero Section -->
     <section id="hero">
+        <canvas id="fire-canvas"></canvas>
         <!-- Top Impact Text Area -->
         <div class="impact-text-wrapper">
             <div class="header-nav">
